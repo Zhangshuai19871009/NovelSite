@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'report/css/report.css' %}">
+{% endblock %}
+
+{% block content %}
+    <table class="grid">
+        <caption>标题：{{ report.title }}</caption>
+        <tbody>
+            <tr>
+                <td class="td1" width="20%">发送人：</td>
+                <td class="tdr">{{ report.user.username }}</td>
+            </tr>
+            <tr>
+                <td class="td1">接收人：</td>
+                <td class="tdr"><span class="hottext">网站管理员</span></td>
+            </tr>
+            <tr>
+                <td class="td1">时间：</td>
+                <td class="tdr">{{ report.report_time|date:"Y-m-d H:i:s" }}</td>
+            </tr>
+            <tr>
+                <td class="td1">内容：</td>
+                <td class="tdr">{{ report.content }}</td>
+            </tr>
+            <tr>
+                <td class="foot" colspan="2">
+                    <a href="{% url 'delete_by_id' report.pk %}">删除消息</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'delete_report' %}">返回</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

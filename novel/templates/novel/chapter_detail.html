@@ -1,0 +1,218 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'novel/css/chapter.css' %}">
+</head>
+<body>
+    <!-- 头部 -->
+    <div class="head">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid" style="background-color: #62a60a;color: white">
+                <!-- 首页 -->
+                <div class="navbar-header" style="margin-left: 8%;">
+                    <a class="navbar-brand" href="{% url 'home' %}"  style="color: white">首页</a>
+                </div>
+                <!-- 登录 -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 8%;">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                浏览记录<span class="caret"></span></a>
+                            <ul class="dropdown-menu hideInfo">
+                                {% for read in read_history %}
+                                    <li style="font-size: 12px">
+                                        <a href="{% url 'get_novel_detail' read.book.pk %}" style="font-size: 14px;font-weight: bold">
+                                            《{{ read.book.book_name }}》
+                                        </a><br>
+                                        最近浏览：
+                                        <a href="{% url 'get_chapter_content' read.chapter.insert_num %}">
+                                            章节目录&nbsp;&nbsp;{{ read.chapter.title|truncatechars:15 }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                <p>*提示：浏览记录仅放置最近浏览的10本书籍</p>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="navbar-form navbar-right">
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}?from={{ request.get_full_path }}" style="margin-right: 20px">
+                                <button type="button" class="btn btn-default" style="background-color: #ccc">登录</button>
+                            </a>
+                            <a href="{% url 'register' %}?from={{ request.get_full_path }}">
+                                <button type="button" class="btn btn-default" style="background-color: #ccc">注册</button>
+                            </a>
+                        {% else %}
+                            <div style="margin-top: 8px;">
+                                欢迎你，
+                                <a href="{% url 'user_info' %}" style="color: white">
+                                    {% if user.nickname == '' %}
+                                        {{ user.username }}
+                                    {% else %}
+                                        {{ user.nickname }}
+                                    {% endif %}
+                                </a>&nbsp;&nbsp;
+                                <a href="{% url 'get_shelf_list' %}?group_id=1" style="color: white">藏书架</a>&nbsp;&nbsp;
+                                <a href="{% url 'logout' %}?from={{ request.get_full_path }}" style="color: white">注销</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="channel-header" class="clearfix">
+            <div class="channel-header-wrapper">
+                <div class="channel-logo">
+                    <a href="{% url 'home' %}" title="清新网">清新网</a>
+                </div>
+            </div>
+            <nav class="channel-nav">
+                <ul class="channel-nav-list">
+                    {% for type in types %}
+                        <li>
+                            <a href="{% url 'get_novel_of_type' type.pk %}">{{ type.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div class="tbody">
+        <div class="mainnav">
+            <div class="main-index" id="direct">
+                位置：<a href="{% url 'home' %}">首页</a> >
+                <a href="{% url 'get_novel_of_type' novel.category.pk %}">{{ novel.category.name }}</a> >
+                <a href="{% url 'get_novel_detail' novel.pk %}">{{ novel.book_name }}</a>
+            </div>
+            <div class="main b-detail" id="directs">
+                <div class="bookInfo">
+                    <h1>
+                        <span class="r"></span>
+                        <em class="l">《{{ novel.book_name }}》</em>
+                        <strong class="l jieqi_title">章节目录 {{ chapter.title }}</strong>
+                        <a href="javascript:bookmark({{ chapter.book_id }},{{ chapter.pk }});" title="加入书签" class="l">加入书签</a>
+                        <a href="javascript:reporterror({{ novel.pk }},{{ chapter.pk }});" title="举报错误" class="l">举报错误</a>
+                        <div class="clear"></div>
+                    </h1>
+                    <div class="toolbar">
+                        <ul>
+                            <li>
+                                <span class="f1">背景：</span>
+                                <div class="f1">
+                                    <input type="button" id="bg1" class="setBG" onclick="setBG('#dcecf5')">
+                                    <input type="button" id="bg2" class="setBG" onclick="setBG('#e1ffe6')">
+                                    <input type="button" id="bg3" class="setBG" onclick="setBG('#edf6d0')">
+                                    <input type="button" id="bg4" class="setBG" onclick="setBG('#eae8f7')">
+                                    <input type="button" id="bg5" class="setBG" onclick="setBG('#f5f1e7')">
+                                    <input type="button" id="bg6" class="setBG" onclick="setBG('#ebf4ef')">
+                                    <input type="button" id="bg7" class="setBG" onclick="setBG('#FFFFFF')">
+                                </div>
+                            </li>
+                            <li>
+                                <span class="f1">字体大小：</span>
+                                <div class="slider">
+                                    <a href="" id="small">小</a>
+                                    <a href="" id="middle">中</a>
+                                    <a href="" id="big">大</a>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="f1">字体颜色：</span>
+                                <div class="f1">
+                                    <select name="txtcolor" id="txtcolor">
+                                        <option value="#000000">黑色</option>
+                                        <option value="#ff0000">红色</option>
+                                        <option value="#006600">绿色</option>
+                                        <option value="#0000ff">蓝色</option>
+                                        <option value="#660000">棕色</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <li id="sudu">
+                                <span class="f1">滚动速度：</span>
+                                <a href="javascript:setSpeed(50);" id="sudu50">快</a>
+                                <a href="javascript:setSpeed(100);" id="sudu100" class="this">中</a>
+                                <a href="javascript:setSpeed(150);" id="sudu150">慢</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mainContenr" id="content"
+                         style="background-color: #FFFFFF;color: #000000;font-size: 18px;">
+                        {% for content in chapter.content.split %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ content }}<br><br>
+                        {% endfor %}
+                    </div>
+                    <div class="backs">
+                        {% if first.insert_num == chapter.insert_num %}
+                            <a href="{% url 'get_novel_detail' novel.pk %}" class="pre" id="pre">上一章</a>
+                        {% else %}
+                            <a href="{{ pre }}" class="pre" id="pre">上一章</a>
+                        {% endif %}
+                        <a href="{% url 'get_novel_detail' chapter.book_id %}" class="backfor" id="backfor">返回目录</a>
+                        {% if last.insert_num == chapter.insert_num %}
+                            <a href="{% url 'get_novel_detail' novel.pk %}" class="next" id="next">下一章</a>
+                        {% else %}
+                            <a href="{{ next }}" class="next" id="next">下一章</a>
+                        {% endif %}
+                        <p>
+                            小提示： 按←键返回上一页，按→键进入上一页,您还可以
+                            <a href="javascript:bookmark({{ chapter.book_id }},{{ chapter.pk }})" title="加入书签">〖加入书签〗</a>
+                            <a href="javascript:reporterror({{ novel.pk }},{{ chapter.pk }});" title="举报错误">〖举报错误〗</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="attention">
+            <em>阅读提示：</em><br>
+            1、<em>注册本站会员</em>，将《<a href="{% url 'get_novel_detail' novel.pk %}"><em>{{ novel.book_name }}</em></a>》加入书架，可以通过书架更快的了解更新信息。<br>
+            2、本站会员登录后，喜欢本书，可以[ <a href="javascript:bookvote({{ novel.pk }})"><em>给本书投票</em></a> ]。<br>
+            3、免费小说《<a href="{% url 'get_novel_detail' novel.pk %}"><em>{{ novel.book_name }}</em></a>》 章 节目录 {{ chapter.title }} 所描述的内容只是作者
+            <em>{{ novel.author }}</em> 个人观点，与本站的立场无关，本站只为广大用户提供阅读平台。<br>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="{% static 'novel/js/chapter.js' %}"></script>
+<script type="text/javascript">
+    $("body").keydown(function () {
+        if (event.keyCode == "13") {
+            $("#backfor").click();
+        }
+        if (event.keyCode == "37") {
+            $("#pre").click();
+        }
+        if (event.keyCode == "39") {
+            $("#next").click();
+        }
+    });
+    //返回目录
+    $("#backfor").click(function () {
+        window.location.href = "{% url 'get_novel_detail' novel.pk %}";
+    });
+    //上一章
+    $("#pre").click(function () {
+        if ({{ first.insert_num }} == {{ chapter.insert_num }}) {
+            window.location.href = "{% url 'get_novel_detail' novel.pk %}";
+        } else {
+            window.location.href = "{% url 'get_chapter_content' pre %}";
+        }
+    });
+    //下一章
+    $("#next").click(function () {
+        if ({{ last.insert_num }} == {{ chapter.insert_num }}) {
+            window.location.href = "{% url 'get_novel_detail' novel.pk %}";
+        } else {
+            window.location.href = "{% url 'get_chapter_content' next  %}";
+        }
+    });
+</script>

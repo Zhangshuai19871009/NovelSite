@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'novel/css/chapter.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="mainnav" id="chapter">
+        <div style="margin: 6px 1px; text-align: center;"></div>
+        <div class="main-index">
+            位置：<a href="{% url 'home' %}">首页</a> >
+            <a href="{% url 'get_novel_of_type' novel.category.pk %}">{{ novel.category.name }}</a> >
+            <a href="{% url 'get_novel_detail' novel.pk %}">{{ novel.book_name }}</a>
+        </div>
+        <div style="margin: 6px 1px; text-align: center; height: 80px"></div>
+        <div class="chapterSo">
+            <div class="chapName">
+                <span class="r">作者：{{ novel.author }}</span>
+                <strong>{{ novel.book_name }}</strong>
+                <div class="clear"></div>
+            </div>
+            <div style="margin: 6px 1px; text-align: center;"></div>
+            <div class="chapterNum">
+                <ul>
+                    <div class="dirtitone">
+                        <h2>{{ novel.book_name }}_章节目录</h2>
+                    </div>
+                    <div class="clearfix dirconone">
+                        {% for chapter in chapter_list %}
+                            <li>
+                                <a href="{% url 'get_chapter_content' chapter.insert_num %}">{{ chapter.title|safe }}</a>
+                            </li>
+                        {% endfor %}
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

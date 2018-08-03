@@ -1,0 +1,281 @@
+#navList {
+    border: 1px solid #ddd;
+    background: none;
+    height: 630px;
+}
+#navList .main-index {
+    padding-left: 38px;
+    height: 37px;
+    line-height: 37px;
+    color: #999;
+    background: url("../image/stitle.png") no-repeat 10px 10px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #ddd;
+}
+.main-index a{
+    padding: 0 5px;
+    text-decoration: none;
+}
+#navList .board-list {
+    padding-top: 15px;
+}
+.seeWell{
+    padding: 10px 0;
+}
+#navList .board-list ul li{
+    margin-left: 5px;
+    margin-right: 0;
+    color: #999;
+    position: relative;
+}
+.seeWell li{
+    float: left;
+    width: 290px;
+    display: inline;
+    margin-bottom: 23px;
+}
+#navList .seeWell li a{
+    color: #666;
+}
+.seeWell li a.mr10{
+    padding: 2px;
+    display: block;
+    border: 1px solid #e0e0e0;
+    width: 126px;
+    height: 156px;
+}
+.l{
+    float: left;
+}
+.mr10{ margin-right: 10px }
+.topss {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+#navList .seeWell li span.l{
+    line-height: 18px;
+    height: 160px;
+    width: 145px;
+}
+#navList .seeWell li a.stitle{
+    color: #339900;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    display: block;
+    height: 22px;
+    overflow: hidden;
+}
+#navList .seeWell li a{
+    color: #666;
+}
+#navList .seeWell li span em.clearfix{
+    background: #f9f9f9;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 5px 0;
+    letter-spacing: 1px;
+    word-wrap: normal;
+    overflow: hidden;
+    display: block;
+    width: 140px;
+    height: 70px;
+}
+#navList .seeWell li span em.clearfix a{
+    color: #333;
+}
+.seeWell li a.readTo{
+    display: block;
+    width: 80px;
+    height: 30px;
+    background: url("../image/common.png") no-repeat 0 -104px;
+    line-height: 27px;
+    text-align: center;
+    float: left;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+#navList a{
+    text-decoration: none;
+}
+.hottext {
+    border-bottom: #333 solid 1px;
+    color: #62a60a;
+}
+.mainnav{
+    border-top: 2px solid #888989;
+    padding-bottom: 4px;
+    display: block;
+    overflow: hidden;
+}
+.main-index {
+    padding-left: 38px;
+    height: 37px;
+    line-height: 37px;
+    color: #999;
+    background: url("../image/stitle.png") no-repeat 10px 10px;
+    border-left: 1px solid #dbdcde;
+    border-right: 1px solid #dbdcde;
+}
+.main-index a{
+    padding: 0 5px;
+    text-decoration: none;
+}
+.b-detail{
+    border-left: 1px solid #dbdcde;
+    border-right: 1px solid #dbdcde;
+    padding: 0 15px;
+    border-bottom: 2px solid #dbdcde;
+    margin-bottom: 100px;
+}
+.detail{
+    border-top: 1px solid #e9eaec;
+    padding: 15px 0;
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+.l{
+    float: left;
+}
+.mr11{
+    margin-right: 10px;
+    margin-top: 44px;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+.leftso {
+    position: absolute;
+    top: 62px;
+    left: 3px;
+}
+.b-info{
+    float: left;
+    width: 970px;
+    margin-left: 20px;
+}
+.b-info h1{
+    font-size: 22px;
+    color: #666;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+.infoDetail{
+    padding: 10px 25px;
+    color: #666;
+    background: url("../image/circle.png") no-repeat 10px 17px;
+    background-color: #f9f9f9;
+    moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 10px 0;
+    letter-spacing: 1px;
+}
+#waa{
+    line-height: 24px;
+}
+.shares{
+    margin-top: 20px;
+    margin-left: 150px;
+}
+.b-oper{
+    margin-top: 20px;
+}
+.b-oper a.reader{
+    float: left;
+    width: 155px;
+    height: 43px;
+    background: url("../image/all.png") no-repeat 0 -66px;
+    text-align: center;
+    line-height: 43px;
+    color: #fff;
+    font-size: 18px;
+}
+.b-oper a.mehide{
+    float: left;
+    height: 28px;
+    background: url("../image/all.png") no-repeat -94px -110px;
+    text-align: center;
+    line-height: 30px;
+    padding-left: 20px;
+    margin-left: 25px;
+    margin-top: 13px;
+    display: inline;
+}
+.b-oper span.meNum {
+    float: left;
+    width: 26px;
+    padding-left: 2px;
+    height: 18px;
+    background: url("../image/all.png") no-repeat -176px -116px;
+    line-height: 18px;
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+    margin-left: 2px;
+    display: inline;
+}
+.b-oper a.toupiao {
+    float: left;
+    height: 28px;
+    background: url("../image/all.png") no-repeat -94px -297px;
+    text-align: center;
+    line-height: 30px;
+    padding-left: 22px;
+    margin-left: 25px;
+    margin-top: 13px;
+    display: inline;
+}
+.b-oper a.error{
+    float: left;
+    height: 28px;
+    background: url("../image/all.png") no-repeat -94px -328px;
+    text-align: center;
+    line-height: 30px;
+    padding-left: 20px;
+    margin-left: 25px;
+    margin-top: 13px;
+    display: inline;
+}
+.clear{
+    clear: both;
+}
+.author{
+    display: block;
+    overflow: hidden;
+    border-top: 1px solid #e9eaec;
+    padding-top: 16px;
+    margin-top: 16px;
+}
+.bookDetail{
+    float: left;
+    width: 755px;
+}
+.bookDetail dl{
+    line-height: 30px;
+    color: #555;
+    float: left;
+}
+.bookDetail dl dt{
+    float: left;
+    width: 140px;
+    background: url("../image/small.png") no-repeat 0 -50px;
+    padding-top: 7px;
+    padding-left: 25px;
+    height: 30px;
+}
+.bookDetail dl dd{
+    float: left;
+    padding-top: 7px;
+    width: 389px;
+}
+.bookDetail .ulnav{
+    padding-left: 0;
+}
+.bookDetail .ulnav li{
+    height: 30px;
+}

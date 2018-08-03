@@ -1,0 +1,39 @@
+ .b-all-content{
+   background: #fff;
+   padding: 10px 0 20px 10px;
+}
+.b-all-content li{
+    float: left;
+    width: 162px;
+    color: #666;
+    margin-right: 8px;
+    margin-bottom: 50px;
+    display: inline;
+    position: relative;
+    line-height: 200%;
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+.msgBorder {
+    padding: 2px;
+    display: block;
+    border: 1px solid #e0e0e0;
+    width: 126px;
+    height: 156px;
+}
+img {
+    vertical-align: middle;
+}
+.topss {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+li a.clearfix {
+    font-size: 15px;
+    color: #4a8d2d;
+    display: block;
+    overflow: hidden;
+}

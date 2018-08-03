@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'novel/css/novel.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="mainnav">
+        <div class="main-index">
+            位置：<a href="{% url 'home' %}">首页</a> >
+            <a href="{% url 'get_novel_of_type' novel.category.pk %}">{{ novel.category.name }}</a> >
+            {{ novel.book_name }}
+        </div>
+        <div class="b-detail">
+            <div class="detail">
+                <a href="{% url 'get_chapter_list' novel.pk %}" class="l mr11">
+                    <img onerror="this.src='{% static 'image/nocover.jpg' %}'" src="{{ novel.image }}"
+                         alt="{{ novel.book_name }}" title="{{ novel.book_name }}" width="160" height="200">
+                </a>
+                <img src="{% static 'image/only.png' %}" class="leftso">
+                <div class="b-info">
+                    <h1>{{ novel.book_name }}</h1>
+                    <div class="infoDetail">
+                        <div id="waa" style="width: 690px;overflow: hidden;height: 72px;">
+                            介绍：&nbsp;&nbsp;&nbsp;&nbsp;“{{ novel.description|safe }}”<br>
+                        </div>
+                        <a href="javascript:void(0)" id="show" onclick="show()" style="float: right">+ 展开全部</a>
+                        <a href="javascript:void(0)" id="hidden" onclick="hid()" style="float: right; display: none;">- 收回介绍</a>
+                        <div class="shares"></div>
+                    </div>
+                    <div class="b-oper">
+                        <a href="{% url 'get_chapter_list' novel.pk %}" class="reader" title="{{ novel.book_name }}免费阅读">开始阅读</a>
+                        <a href="javascript:addshelf({{ novel.pk }});" title="将{{ novel.book_name }}加入书架" class="mehide">加入书架</a>
+                        <span class="meNum" id="addShelf">{{ shelf_num }}</span>
+                        <a href="javascript:bookvote({{ novel.pk }});" class="toupiao">给本书投票</a>
+                        <span id="toupiaonum" class="meNum">{{ vote_count }}</span>
+                        <a href="javascript:reporterror({{ novel.pk }});" class="error">违禁举报</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="author">
+                    <div class="bookDetail">
+                        <dl>
+                            <dt>小说状态：</dt>
+                            <dd>{{ novel.status }}</dd>
+                        </dl>
+                        <dl>
+                            <dt>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：</dt>
+                            <dd>{{ novel.author }}</dd>
+                        </dl>
+                        <dl>
+                            <dt>最新章节：</dt>
+                            <dd>
+                                <ul class="ulnav">
+                                    {% for chapter in chapters %}
+                                        <li>
+                                            <a href="{% url 'get_chapter_content' chapter.insert_num %}">{{ chapter.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_extends %}
+    <script type="text/javascript" src="{% static 'novel/js/novel.js' %}"></script>
+{% endblock %}

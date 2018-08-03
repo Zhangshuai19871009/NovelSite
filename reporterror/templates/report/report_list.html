@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'report/css/report.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'delete_report' %}" method="post">
+        {% csrf_token %}
+        <table class="grid">
+            <caption>发件箱（收/发件箱共允许消息数：50，现有消息数：{{ report_list.count }}）</caption>
+            <tbody>
+            <tr>
+                <th width="5%">
+                    <input type="checkbox" id="checkall" name="checkall" value="checkall"
+                    onclick="javascript: for(var i=0;i<this.form.elements.length;i++){ if(this.form.elements[i].name != 'checkkall')
+                        this.form.elements[i].checked = this.form.checkall.checked; }">
+                </th>
+                <th width="20%">收件人</th>
+                <th width="60%">标题</th>
+                <th width="15%">日期</th>
+            </tr>
+            {% for report in report_list %}
+                <tr>
+                    <td style="text-align: center"><input type="checkbox" name="check_box_list" value="{{ report.pk }}"></td>
+                    <td><span>网络管理员</span></td>
+                    <td><a href="{% url 'get_report_detail' report.pk %}">{{ report.title }}</a></td>
+                    <td style="text-align: center">{{ report.report_time|date:"Y-m-d H:i:s" }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td class="foot" colspan="4">
+                    <input type="button" class="button" name="allcheck" value="全部选中"
+                    onclick="javascript: for (var i=0;i<this.form.elements.length;i++){ this.form.elements[i].checked = true; }">
+                    <input type="button" class="button" name="nocheck" value="全部取消"
+                    onclick="javascript: for (var i=0;i<this.form.elements.length;i++){ this.form.elements[i].checked = false; }">
+                    <input type="button" class="button" name="delcheck" value="删除选中"
+                    onclick="javascript:if(confirm('确实要删除选中记录么？')){ this.form.submit();}">
+                    <input type="button" class="button" name="delall" value="清空所有"
+                    onclick="javascript:if(confirm('确实要清空所有记录么？'))document.location='{% url 'delete_report' %}?id=delall'">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+{% endblock %}

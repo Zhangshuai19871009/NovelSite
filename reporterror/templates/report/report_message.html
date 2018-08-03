@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div  style="font-size: 20px;text-align: center;padding-top: 20%;">
+        <span id="show_"></span>
+    </div>
+    <script type="text/javascript">
+        var t = 3;
+        setInterval('refer()', 1000);
+        function refer() {
+            if (t == 0) {
+                window.location.href = '{% url 'delete_report' %}'
+            }
+            document.getElementById("show_").innerHTML =
+                "{{ message }}成功，"+ t +"秒后跳转...&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"{% url 'delete_report' %}\">点击这里</a>";
+            t--;
+        }
+    </script>
+{% endblock %}

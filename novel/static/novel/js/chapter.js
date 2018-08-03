@@ -1,0 +1,51 @@
+function bookmark(book_id, chapter_id) {
+    $.ajax({
+        url: "/bookshelf/add_bookmark/",
+        type: 'GET',
+        data: {
+            book_id: book_id,
+            chapter_id: chapter_id,
+            group_id: 1
+        },
+        cache: false,
+        success: function (data) {
+            alert(data['message'])
+        }
+    });
+}
+function bookvote(book_id) {
+    $.ajax({
+        url: '/bookvote/get_book_vote/',
+        type: 'GET',
+        data: {
+            book_id: book_id,
+        },
+        cache: false,
+        success: function (data) {
+            if (data['status'] == 'SUCCESS') {
+                $("#toupiaonum").text(data['num']);
+                alert(data['message']);
+            } else {
+                alert(data['message']);
+            }
+        }
+    });
+}
+// 违禁举报
+function reporterror(book_id, chapter_id) {
+$.ajax({
+    url: '/reporterror/to_novel_error/',
+    type: 'GET',
+    cache: false,
+    success: function (data) {
+        if (data['code'] == 4002) {
+            alert(data['message']);
+            window.location.href = "/reporterror/delete_report/"
+        } else if (data['code'] == 4001) {
+            alert(data['message']);
+        } else {
+            window.location.href = "/reporterror/report_error_form/" + book_id + "," + chapter_id
+        }
+    }
+});
+}

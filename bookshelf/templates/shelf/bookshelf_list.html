@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bookshelf_tags %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'shelf/css/bookshelf.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'delete_choice_book' %}" method="post">
+        {% csrf_token %}
+        <table class="grid">
+            <caption>您的书架可收藏 66 本，已收藏 {{ book_list.count }} 本，本组有 {{ group_book_list.count }} 本。     选择分组&nbsp;&nbsp;
+                <select id="group_id" name="group_id" onchange="javascript:document.location='{% url 'get_shelf_list' %}?group_id='+this.value;">
+                    {% for group in group_list %}
+                        <option value="{{ group.pk }}"
+                            {% if select == group.pk %}
+                                selected="selected"
+                            {% endif %}
+                        >{{ group.group_name }}</option>
+                    {% endfor %}
+                </select>
+            </caption>
+            <tbody>
+            <tr>
+                <th width="5%">
+                    <input type="checkbox" id="checkall" name="checkall" value="checkall"
+                    onclick="javascript: for(var i=0;i<this.form.elements.length;i++){ if(this.form.elements[i].name != 'checkkall')
+                        this.form.elements[i].checked = this.form.checkall.checked; }">
+                </th>
+                <th width="20%">小说名称</th>
+                <th width="20%">最新章节</th>
+                <th width="30%">书签</th>
+                <th width="15%">操作</th>
+            </tr>
+            {% for bookshelf in group_book_list %}
+                <tr>
+                    <td style="text-align: center"><input type="checkbox" name="check_box_list" value="{{ bookshelf.pk }}"></td>
+                    <td><a href="{% url 'get_novel_detail' bookshelf.book.pk %}">{{ bookshelf.book.book_name }}</a></td>
+                    <td>
+                        {% get_last_chapter bookshelf.book.pk as chapter %}
+                        <a href="{% url 'get_chapter_content' chapter.insert_num %}">{{ chapter.title }}</a>
+                    </td>
+                    <td style="text-align: center">
+                        {% if bookshelf.bookmark.insert_num %}
+                            <a href="{% url 'get_chapter_content' bookshelf.bookmark.insert_num %}">
+                                {{ bookshelf.bookmark.title }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center">
+                        <input type="button" onclick="javascript:remove({{ bookshelf.pk }});" value="移除" style="font-size: 12px">
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr style="text-align: center">
+                <td class="foot" colspan="4">
+                    选中项目
+                    <select name="shelfgroup_id">
+                        <option value="0" selected="selected">移出书架</option>
+                        {% for group in group_list %}
+                            {% if select != group.pk %}
+                                <option value="{{ group.pk }}">{{ group.group_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input type="submit" class="button" name="btnsubmit" value="确认" style="font-size: 12px">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+{% endblock %}
+{% block script_extends %}
+    <script type="text/javascript" src="{% static 'shelf/js/bookshelf.js' %}"></script>
+{% endblock %}

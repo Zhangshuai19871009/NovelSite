@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'novel/css/novel.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="mainnav" id="navList">
+        <div class="main-index">
+            位置：搜索结果：搜索关键词“
+            <b class="hottext">{{ bookname }}</b>
+            ”，共有
+            <b class="hottext">{{ novel_list.count }}</b>
+            条结果
+        </div>
+        <div class="board-list">
+            <ul class="seeWell">
+                {% for novel in novel_list %}
+                    <li>
+                        <a href="{% url 'get_novel_detail' novel.pk %}" class="l mr10">
+                            <img onerror="this.src='http://www.quanshuwang.com/modules/article/images/nocover.jpg'"
+                                 src="{{ novel.image }}" width="120" height="150">
+                        </a>
+                        <img class="topss" src="{% static 'image/only.png' %}">
+                        <span class="l">
+                            <a href="" title="{{ novel.book_name }}" class="clearfix stitle">{{ novel.book_name }}</a>
+                            作者：<a href="">{{ novel.author }}</a>
+                            <em class="clearfix">
+                                {{ novel.description|striptags|truncatechars:20 }}
+                                <a href="{% url 'get_novel_detail' novel.pk %}">更多</a>
+                            </em>
+                            <a href="{% url 'get_novel_detail' novel.pk %}" class="readTo">马上阅读</a>
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="paginator">
+        <ul class="pagination pull-right">
+            {# 当前页和总页数 #}
+            <li>
+                <span>
+                    {{ page_of_novels.number }}/{{ page_of_novels.paginator.num_pages }}
+                </span>
+            </li>
+            {# 上一页 #}
+            <li>
+                {% if page_of_novels.has_previous %}
+                    <a href="?page=1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    <a href="?page={{ page_of_novels.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                {% else %}
+                    <span aria-hidden="true">&laquo;</span>
+                    <span aria-hidden="true">&lt;</span>
+                {% endif %}
+            </li>
+            {# 全部页码 #}
+            {% for page_num in page_range %}
+                {% if page_num == page_of_novels.number %}
+                    <li class="active"><span>{{ page_num }}</span></li>
+                {% else %}
+                    {% if page_num == '...' %}
+                        <li><span>{{ page_num }}</span></li>
+                    {% else %}
+                        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {# 下一页 #}
+            <li>
+                {% if page_of_novels.has_next %}
+                    <a href="?page={{ page_of_novels.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                    <a href="?page={{ page_of_novels.paginator.num_pages }}" aria-label="Previous">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% else %}
+                    <span aria-hidden="true">&gt;</span>
+                    <span aria-hidden="true">&raquo;</span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
